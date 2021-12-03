@@ -21,7 +21,7 @@ function generateEpsilonRate() {
     return parseInt(epsilonRate, 2);
 }
 
-function getMostChars(index) {
+function getMostChars(input, index) {
     let zero = 0;
     let one = 0;
     for (let i = 0; i < input.length; i++) {
@@ -33,7 +33,7 @@ function getMostChars(index) {
     return bit;
 }
 
-function getLeastChars(index) {
+function getLeastChars(input, index) {
     let zero = 0;
     let one = 0;
     for (let i = 0; i < input.length; i++) {
@@ -46,29 +46,31 @@ function getLeastChars(index) {
 }
 
 let oxygenRatingValue = "";
-function getOxygenRatingValue(input) {
-    if (input.length === 1 ) {
-        return oxygenRatingValue = input[0];
+function getOxygenRatingValue(oxygenInput) {
+    if (oxygenInput.length === 1 ) {
+        return oxygenRatingValue = oxygenInput[0];
     }
 
     for (let i = 0; i < 12; i++) {
-        const mostZeroesOrOnes = getMostChars(i);
-        input = input.filter(item => item.charAt(i) === mostZeroesOrOnes);
+        let mostZeroesOrOnes = getMostChars(oxygenInput, i);
+        oxygenInput = oxygenInput.filter(item => item.charAt(i) === mostZeroesOrOnes);
     }
-    getOxygenRatingValue(input);
+    getOxygenRatingValue(oxygenInput);
 }
 
 let co2ScrubbingValue = "";
-function getco2RatingValue(input) {
-    if (input.length === 1 ) {
-        return co2ScrubbingValue = input[0];
+function getco2RatingValue(co2Input) {
+    if (co2Input.length <= 1 ) {
+        return co2ScrubbingValue = co2Input[0];
     }
 
     for (let i = 0; i < 12; i++) {
-        const mostZeroesOrOnes = getLeastChars(i);
-        input = input.filter(item => item.charAt(i) === mostZeroesOrOnes);
+        const leastZeroesOrOnes = getLeastChars(co2Input, i);
+        co2Input = co2Input.filter(item => item.charAt(i) === leastZeroesOrOnes);
+        if (co2Input.length < 3) {break;} 
     }
-    getco2RatingValue(input);
+
+    getco2RatingValue(co2Input);
 }
 
 function getLifeSupport() {
